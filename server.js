@@ -20,6 +20,7 @@ const connessione = mysql.createConnection(
    {
       host: "mysql-371f75ea-itis-b1f2.b.aivencloud.com",
       user: "avnadmin",
+      password: "AVNS_Q0tt-21uinsBZIath3z",
       database: "defaultdb",
       port: "24943",
       ssl: {
