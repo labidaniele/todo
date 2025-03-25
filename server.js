@@ -18,9 +18,9 @@ app.use(bodyParser.urlencoded({
 //connessione al database
 const connessione = mysql.createConnection(
    {
-      host: "mysql-371f75ea-itis-b1f2.b.aivencloud.com",
+      host: "mysql-152a3830-itis-b1f2.k.aivencloud.com",
       user: "avnadmin",
-      password: "AVNS_Q0tt-21uinsBZIath3z",
+      password: "AVNS_gPI6jGftIi4i2BTFx49",
       database: "defaultdb",
       port: "24943",
       ssl: {
@@ -48,19 +48,20 @@ const createTable = () => {
       CREATE TABLE IF NOT EXISTS todo (
       id INT PRIMARY KEY AUTO_INCREMENT,
       name VARCHAR(255) NOT NULL,
+      date DATETIME NOT NULL,
       completed BOOLEAN
     )
    `)
 }
 
 const insert = (todo) => {
-   let sql = `INSERT INTO todo (name, completed) 
-              VALUES ('${todo.name}', ${todo.completed ? 1 : 0})`;
+   let sql = `INSERT INTO todo (name, data, completed) 
+              VALUES ('${todo.name}', '${todo.data}', ${todo.completed ? 1 : 0})`;
    return executeQuery(sql);
  };
 
  const select = () => {
-   let sql = `SELECT id, name, completed FROM todo`;
+   let sql = `SELECT id, name, date, completed FROM todo`;
    return executeQuery(sql);
  };
 
@@ -79,6 +80,7 @@ const deleteSQL = (todo) => {
 // componente per l'aggiunta del todo, prima controlla che sia stato riempito il campo e prima se sia stato inserito nel database
 app.post("/todo/add", (req, res) =>{
    const todo = req.body;
+   //controllare anche la data
    if (!todo.name) {
       return res.status(400).json({
          error: "errore, il nome è richiesto"
