@@ -55,8 +55,8 @@ const createTable = () => {
 }
 
 const insert = (todo) => {
-   let sql = `INSERT INTO todo (name, data, completed) 
-              VALUES ('${todo.name}', '${todo.data}', ${todo.completed ? 1 : 0})`;
+   let sql = `INSERT INTO todo (name, date, completed) 
+              VALUES ('${todo.name}', '${todo.date}', ${todo.completed ? 1 : 0})`;
    return executeQuery(sql);
  };
 
