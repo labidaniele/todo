@@ -12,8 +12,8 @@ const createMiddleware = () => {
       // Carica tutte le todo
       load: () => {
         return fetch("/todo")
-          .then((response) => response.json())
-          .then((json) => json); // { todos: [...] }
+          .then((response) => response.json());
+          //.then((json) => json); // { todos: [...] } /////////////////////////////////////////////
       },
   
       // Segna come completata
@@ -39,6 +39,7 @@ const createMiddleware = () => {
     const template = `
       <tr>
         <td class="%COLOR">%TASK</td>
+        <td>%DATE</td>
         <td><button class="btn btn-success" id="COMPLETE_%ID" type="button">COMPLETA</button></td>
         <td><button class="btn btn-danger" id="DELETE_%ID" type="button">ELIMINA</button></td>
       </tr>
@@ -50,6 +51,7 @@ const createMiddleware = () => {
           let row = template
             .replace("%COLOR", todo.completed ? "text-success" : "text-primary")
             .replace("%TASK", todo.name)
+            .replace("%DATE", todo.date)
             .replace("COMPLETE_%ID", "COMPLETE_" + todo.id)
             .replace("DELETE_%ID", "DELETE_" + todo.id);
           html += row;
@@ -77,8 +79,10 @@ const createMiddleware = () => {
       });
     };
   
-    const addTodo = (taskName) => {
-      const todo = { name: taskName, completed: false };
+    const addTodo = (taskName, dateValue) => {
+      const dateString = dateValue.replace("T", " ");
+      
+      const todo = { name: taskName, date: dateString, completed: false };
       middleware.send(todo).then(() => reload());
     };
   
@@ -106,11 +110,20 @@ const createMiddleware = () => {
   const businessLogic = createBusinessLogic(middleware, list);
   
   // Gestione form
-  const inputInsert = document.querySelector("#inputInsert");
+  const inputInsert = document.querySelector("#inputInsert");  ////////////////////
+  const inputDate = document.querySelector("#inputDate");
   const buttonInsert = document.querySelector("#buttonInsert");
+
+  
+
   buttonInsert.onclick = () => {
-    businessLogic.add(inputInsert.value);
+
+    const taskName = inputInsert.value;
+    const dateValue = inputDate.value
+
+    businessLogic.add(taskName, dateValue);
     inputInsert.value = "";
+    inputDate.value = "";
   };
   
   // Carica subito la lista

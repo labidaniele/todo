@@ -14,6 +14,7 @@
     <div class="card">
         <div class="row">
             <input id="inputInsert" type="text"/>
+            <input id="inputDate" type="datetime-local"/>
             <button id="buttonInsert" type="button">Aggiungi</button>
         </div>
         <div class="row">
@@ -21,17 +22,12 @@
                 <thead class="table-dark">
                     <tr>                            
                         <th>Task</th>
+                        <th>Data</th>
                         <th>Completa</th>                            
                         <th>Elimina</th>                        
                     </tr>
                 </thead>
-                <tbody id="listTable">
-                    <tr>                            
-                        <td>%TASK</td>
-                        <td><button id="COMPLETE_%ID" type="button">COMPLETA</button></td>                            
-                        <td><button id="DELETE_%ID" type="button">ELIMINA</button></td>                                                    
-                    </tr>
-                </tbody>
+                <tbody id="listTable"></tbody>
             </table>
         </div>
     </div>
